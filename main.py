@@ -12,8 +12,15 @@ def getQuote():
     response = requests.get(api_url, headers={'X-Api-Key': api_key})
     if response.status_code == requests.codes.ok:
          quote = response.text.strip("[]")
+         x = json.loads(quote)['quote']
+         if len(x)<=128:
+            return x
+         else:
+            return "Alone is better then toxic friends"
+        
+
          
-         return json.loads(quote)['quote']
+         
          
     else:
         print("Error:", response.status_code, response.text)
@@ -25,8 +32,19 @@ def getQuote():
 
 RPC =Presence(token)
 RPC.connect()
-RPC.update(state="Padhle Pehle",details=getQuote())
+
 
 Nikhil = "Sigma"
+
 while Nikhil == "Sigma":
-    time.sleep(10)
+   
+    RPC.update( 
+       
+        large_image="anime_pfp_4",
+        state="Studying",
+        details=getQuote(),
+        start=int(time.time())
+
+
+    )
+    time.sleep(60)
